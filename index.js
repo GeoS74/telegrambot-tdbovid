@@ -4,8 +4,7 @@ const config = require('./config');
 const errorInterceptor = require('./middleware/error.interceptor');
 const emodjiValidator = require('./middleware/validators/emodji.validator');
 const user = require('./middleware/user');
-const start = require('./controllers/start');
-const help = require('./controllers/help');
+const { start, help } = require('./controllers/commands');
 const sticker = require('./controllers/sticker');
 const text = require('./controllers/text');
 
