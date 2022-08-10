@@ -1,3 +1,6 @@
+const fetch = require('node-fetch');
+var iconv = require('iconv-lite');
+
 const isEmodji = require('../libs/isEmodji');
 const logger = require('../libs/logger')('interceptor');
 const parser = require('../parsers/tdbovid.parser');
@@ -8,7 +11,7 @@ module.exports = async (ctx) => {
     return;
   }
 
-  const report = getAnswer(ctx.message.text, ctx.user);
+  const report = await getAnswer(ctx.message.text, ctx.user);
   if (report) {
     _reply.call(null, ctx, report);
     return;
@@ -30,10 +33,49 @@ function _reply(ctx, answer, isPosition) {
   ctx.reply(answer);
 }
 
-function getAnswer(phrase, user) {
+
+
+
+
+
+function getAnecdot(){
+  return fetch('http://rzhunemogu.ru/RandJSON.aspx?CType=1')
+  .then(async response => {
+    if (response.ok) {
+      const res = await response.arrayBuffer();
+      const str = iconv.decode(Buffer.from(res), 'win1251');
+      return str.slice(12, str.indexOf("\"}"));
+    }
+
+    throw new Error('error connection')
+  })
+  .catch(error => {
+      console.log(error.message)
+      logger.error(error.message)
+    })
+}
+
+
+
+
+
+
+
+
+
+
+
+
+async function getAnswer(phrase, user) {
   switch (phrase.toLowerCase(phrase).trim()) {
     case 'hi':
     case 'hello': return `Hello, ${user}`;
+    case 'приколи':
+    case 'прикол':
+    case 'ржач':
+    case 'анекдот':
+    case 'юмор':
+    case 'шутка': return await getAnecdot();
     case 'привет':
     case 'здарова':
     case 'здорово': return 'Салам, брат';
@@ -123,8 +165,8 @@ function getAnswer(phrase, user) {
     case 'Что умеешь':
     case 'Что умеешь?': return 'подбирать запчасти на поджопные машины';
     case 'горбунов': return 'Игорь Витальевич?';
-    case 'новикова': return 'миссис тендер 2022';
-    case 'суворова': return 'ты в курсе что она сейчас Новикова?';
+    case 'суворова': return 'миссис тендер 2022';
+    case 'новикова': return 'ты в курсе что она сейчас Суворова?';
     case 'сироткин': return 'есть такой';
     case 'лиманский': return 'он дома вообще бывает?';
     case 'маначенко': return 'Лёха патриот, мой лучший друг';
