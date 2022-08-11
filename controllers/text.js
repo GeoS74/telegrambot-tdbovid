@@ -38,8 +38,8 @@ function _reply(ctx, answer, isPosition) {
 
 
 
-function getAnecdot(){
-  return fetch('http://rzhunemogu.ru/RandJSON.aspx?CType=1')
+function getAnecdot(type){
+  return fetch(`http://rzhunemogu.ru/RandJSON.aspx?CType=${type || 1}`)
   .then(async response => {
     if (response.ok) {
       const res = await response.arrayBuffer();
@@ -75,7 +75,14 @@ async function getAnswer(phrase, user) {
     case 'ржач':
     case 'анекдот':
     case 'юмор':
-    case 'шутка': return await getAnecdot();
+    case 'шутка': return await getAnecdot(11);
+    case 'наливай':
+    case 'тост': return await getAnecdot(16);
+    case 'хрень':
+    case 'статус':
+    case 'бомби':
+    case 'жги':
+    case 'фраза': return await getAnecdot(18);
     case 'привет':
     case 'здарова':
     case 'здорово': return 'Салам, брат';
