@@ -78,11 +78,15 @@ async function getAnswer(phrase, user) {
     case 'шутка': return await getAnecdot(11);
     case 'наливай':
     case 'тост': return await getAnecdot(16);
-    case 'хрень':
+    case 'скажи что-нибудь':
+    case 'что нового?':
+    case 'что нового':
     case 'статус':
     case 'бомби':
     case 'жги':
-    case 'фраза': return await getAnecdot(18);
+    case 'пиздани чего-нибудь':
+    case 'пиздани че-нибудь':
+    case 'пиздани чё-нибудь': return await getAnecdot(18);
     case 'привет':
     case 'здарова':
     case 'здорово': return 'Салам, брат';
