@@ -11,6 +11,13 @@ module.exports = async (ctx) => {
     return;
   }
 
+
+  const photo = await getPhoto(ctx.message.text, ctx.user);
+  if (photo) {
+    ctx.replyWithPhoto(photo)
+    return;
+  }
+
   const report = await getAnswer(ctx.message.text, ctx.user);
   if (report) {
     _reply.call(null, ctx, report);
@@ -35,9 +42,6 @@ function _reply(ctx, answer, isPosition) {
 
 
 
-
-
-
 function getAnecdot(type){
   return fetch(`http://rzhunemogu.ru/RandJSON.aspx?CType=${type || 1}`)
   .then(async response => {
@@ -56,15 +60,25 @@ function getAnecdot(type){
 }
 
 
+async function getPhoto(phrase, user) {
+  switch (phrase.toLowerCase(phrase).trim()) {
+    case 'телка':
+    case 'тёлка': return bar[_getRandomIndex(bar.length)];;
+    default: return null;
+  }
+}
 
-
-
-
-
-
-
-
-
+const bar = [
+  'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSMI8u_sqN0s565NPXAYfCsmX59RWWI-XTCrw&usqp=CAU',
+  'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQkvEAhaBAVAmWcn_5GrNPdKaztlJcNeomkNA&usqp=CAU',
+  'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQrzOC9ndf1xiuAKxSTi643ImxmjRooienBkg&usqp=CAU',
+  'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqzDyprGZPsc2M6o82yKt4F1IbHRcLUOR9RQ&usqp=CAU',
+  'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBi2Avs2D2nQe5FPSKH8SuW86Mauj0zsO6MQ&usqp=CAU',
+  'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQgkWHIhqJXUbi0VkHjiNwGAPEKBrxwgIg4Tw&usqp=CAU',
+  'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQsFuHQSgTunBxUbwZmND46guVMnq984NxFXQ&usqp=CAU',
+  'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTMH2jvyu06xzsmFrMyMVEswkfT_9olfAJDiQ&usqp=CAU',
+  'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_daIQADMAg8IHzx6qy4tu1BIJuiIuyL6-AQ&usqp=CAU',
+]
 
 async function getAnswer(phrase, user) {
   switch (phrase.toLowerCase(phrase).trim()) {
